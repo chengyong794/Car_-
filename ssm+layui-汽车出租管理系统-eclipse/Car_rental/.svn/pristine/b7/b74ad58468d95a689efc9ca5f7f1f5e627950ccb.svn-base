@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chengyong.car.mapper.CarCustomerMapper">
+  <resultMap id="BaseResultMap" type="com.chengyong.car.entity.CarCustomer">
+    <id column="IDENTITY" jdbcType="VARCHAR" property="identity" />
+    <result column="CUSTNAME" jdbcType="VARCHAR" property="custname" />
+    <result column="SEX" jdbcType="DECIMAL" property="sex" />
+    <result column="ADDRESS" jdbcType="VARCHAR" property="address" />
+    <result column="PHONE" jdbcType="VARCHAR" property="phone" />
+    <result column="CAREER" jdbcType="VARCHAR" property="career" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    IDENTITY, CUSTNAME, SEX, ADDRESS, PHONE, CAREER
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from CAR_CUSTOMER
+    where IDENTITY = #{identity,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from CAR_CUSTOMER
+    where IDENTITY = #{identity,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.chengyong.car.entity.CarCustomer">
+    insert into CAR_CUSTOMER (IDENTITY, CUSTNAME, SEX, 
+      ADDRESS, PHONE, CAREER
+      )
+    values (#{identity,jdbcType=VARCHAR}, #{custname,jdbcType=VARCHAR}, #{sex,jdbcType=DECIMAL}, 
+      #{address,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{career,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.chengyong.car.entity.CarCustomer">
+    insert into CAR_CUSTOMER
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="identity != null">
+        IDENTITY,
+      </if>
+      <if test="custname != null">
+        CUSTNAME,
+      </if>
+      <if test="sex != null">
+        SEX,
+      </if>
+      <if test="address != null">
+        ADDRESS,
+      </if>
+      <if test="phone != null">
+        PHONE,
+      </if>
+      <if test="career != null">
+        CAREER,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="identity != null">
+        #{identity,jdbcType=VARCHAR},
+      </if>
+      <if test="custname != null">
+        #{custname,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=DECIMAL},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="career != null">
+        #{career,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chengyong.car.entity.CarCustomer">
+    update CAR_CUSTOMER
+    <set>
+      <if test="custname != null">
+        CUSTNAME = #{custname,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        SEX = #{sex,jdbcType=DECIMAL},
+      </if>
+      <if test="address != null">
+        ADDRESS = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        PHONE = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="career != null">
+        CAREER = #{career,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where IDENTITY = #{identity,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chengyong.car.entity.CarCustomer">
+    update CAR_CUSTOMER
+    set CUSTNAME = #{custname,jdbcType=VARCHAR},
+      SEX = #{sex,jdbcType=DECIMAL},
+      ADDRESS = #{address,jdbcType=VARCHAR},
+      PHONE = #{phone,jdbcType=VARCHAR},
+      CAREER = #{career,jdbcType=VARCHAR}
+    where IDENTITY = #{identity,jdbcType=VARCHAR}
+  </update>
+</mapper>

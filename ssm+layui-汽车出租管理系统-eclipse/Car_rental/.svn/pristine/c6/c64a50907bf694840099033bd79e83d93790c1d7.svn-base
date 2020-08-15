@@ -1,0 +1,98 @@
+package com.chengyong.car.services.impl;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.chengyong.car.entity.Cars;
+import com.chengyong.car.mapper.CarsMapper;
+import com.chengyong.car.service.CarsService;
+import com.chengyong.car.util.FileUtil;
+import com.chengyong.car.util.Publicvalue;
+import com.chengyong.sys.util.DataView;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+
+@Service
+public class CarsServiceImpl implements CarsService{
+	@Autowired
+	private CarsMapper carsMapper;
+
+	@Override
+	public int deleteByPrimaryKey(String carnumber) {
+		Cars record = new Cars();
+		record.setCarnumber(carnumber);
+		Cars c = carsMapper.selectBycarnumber(record); //获取删除前的图片路径
+		
+		if(!c.getCarimg().equals("/CarImg/default.jpg")) {  //默认图片判断,如果不是默认图片就进行删除
+			String DelCarPic = c.getCarimg().replace("/CarImg/", "D:\\upload\\");
+	        FileUtil.removeFileByPath(DelCarPic);  //删除要删除原来的图片
+		   }
+		
+		return carsMapper.deleteByPrimaryKey(carnumber);
+	}
+
+	@Override
+	public int insert(Cars record) {
+		return carsMapper.insert(record);
+	}
+
+	@Override
+	public int insertSelective(Cars record) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public DataView selectByPrimaryKey(Cars record) {
+		Page<Cars> page = PageHelper.startPage(record.getPage(),record.getLimit());
+		List<Cars> list = carsMapper.selectByPrimaryKey(record);
+		PageInfo<Cars> info = new PageInfo<Cars>(list);
+		return new DataView(info.getTotal(),list);
+	}
+
+	@Override
+	public int updateByPrimaryKeySelective(Cars record) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int updateByPrimaryKey(Cars record,HttpServletRequest request) {
+		Cars c = carsMapper.selectBycarnumber(record); //获取修改前的图片路径
+		
+		if(!c.getCarimg().equals("/CarImg/default.jpg")) {  //默认图片判断,如果不是默认图片就进行删除
+			String DelCarPic = c.getCarimg().replace("/CarImg/", "D:\\upload\\");
+	        FileUtil.removeFileByPath(DelCarPic);  //删除要删除原来的图片
+		   }
+		
+        String Carpic = FileUtil.FileUpdate(Publicvalue.Carpic,request);
+        record.setCarimg(Carpic);
+		return carsMapper.updateByPrimaryKey(record);
+	}
+
+	@Override
+	public int deleteByPrimaryKeyLot(Cars record) {
+		int j = 0;
+		for (int i = 0; i < record.getCarnumbers().length; i++) {
+			Cars c = carsMapper.selectBycarnumber(record); //获取删除前的图片路径
+			
+			if(!c.getCarimg().equals("/CarImg/default.jpg")) {  //默认图片判断,如果不是默认图片就进行删除
+				String DelCarPic = c.getCarimg().replace("/CarImg/", "D:\\upload\\");
+		        FileUtil.removeFileByPath(DelCarPic);  //删除要删除原来的图片
+			   }
+			j = carsMapper.deleteByPrimaryKey(record.getCarnumbers()[i]);
+		}
+		return j;
+	}
+
+	@Override
+	public int updateByIsrentiing(Cars record) {
+		return carsMapper.updateByIsrentiing(record);
+	}
+
+}

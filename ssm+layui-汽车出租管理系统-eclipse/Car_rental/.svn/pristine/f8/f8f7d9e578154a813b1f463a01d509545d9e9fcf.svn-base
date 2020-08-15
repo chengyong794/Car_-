@@ -1,0 +1,6 @@
+package com.chengyong.sys.util;
+
+public class Publicvalue {
+	//重置密码
+   public static final String PWD = "123456";
+}

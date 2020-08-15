@@ -1,0 +1,17 @@
+package com.chengyong.sys.mapper;
+
+import com.chengyong.sys.entity.SysNews;
+
+public interface SysNewsMapper {
+    int deleteByPrimaryKey(Short newsid);
+
+    int insert(SysNews record);
+
+    int insertSelective(SysNews record);
+
+    SysNews selectByPrimaryKey(Short newsid);
+
+    int updateByPrimaryKeySelective(SysNews record);
+
+    int updateByPrimaryKey(SysNews record);
+}

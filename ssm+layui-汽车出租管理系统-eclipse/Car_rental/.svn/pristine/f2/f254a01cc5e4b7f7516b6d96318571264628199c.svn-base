@@ -1,0 +1,17 @@
+package com.chengyong.car.mapper;
+
+import com.chengyong.car.entity.CarRent;
+
+public interface CarRentMapper {
+    int deleteByPrimaryKey(String rentid);
+
+    int insert(CarRent record);
+
+    int insertSelective(CarRent record);
+
+    CarRent selectByPrimaryKey(String rentid);
+
+    int updateByPrimaryKeySelective(CarRent record);
+
+    int updateByPrimaryKey(CarRent record);
+}

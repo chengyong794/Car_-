@@ -1,0 +1,20 @@
+package com.chengyong.car.mapper;
+
+import org.springframework.stereotype.Repository;
+
+import com.chengyong.car.entity.CarCheck;
+
+@Repository
+public interface CarCheckMapper {
+    int deleteByPrimaryKey(String checkid);
+
+    int insert(CarCheck record);
+
+    int insertSelective(CarCheck record);
+
+    CarCheck selectByPrimaryKey(String checkid);
+
+    int updateByPrimaryKeySelective(CarCheck record);
+
+    int updateByPrimaryKey(CarCheck record);
+}

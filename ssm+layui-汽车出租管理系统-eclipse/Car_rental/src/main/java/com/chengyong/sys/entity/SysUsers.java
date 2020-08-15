@@ -1,0 +1,145 @@
+package com.chengyong.sys.entity;
+
+public class SysUsers {
+    private Short userid;
+
+    private String logname;
+
+    private String identity;
+
+    private String realname;
+
+    private Short sex;
+
+    private String address;
+
+    private String phone;
+
+    private String pwd;
+
+    private String position;
+
+    private Short type;
+    
+    private Integer page;
+    
+    private Integer limit;
+    
+    private String code;
+    
+    private String headpic;
+    
+    
+    public String getHeadpic() {
+		return headpic;
+	}
+
+	public void setHeadpic(String headpic) {
+		this.headpic = headpic;
+	}
+
+	public String getCode() {
+    	return code;
+    }
+
+    public void setCode(String code) {
+    	this.code = code;
+    }
+    
+
+    public Integer getPage() {
+		return page;
+	}
+
+	public void setPage(Integer page) {
+		this.page = page;
+	}
+
+	public Integer getLimit() {
+		return limit;
+	}
+
+	public void setLimit(Integer limit) {
+		this.limit = limit;
+	}
+
+	public Short getUserid() {
+        return userid;
+    }
+
+    public void setUserid(Short userid) {
+        this.userid = userid;
+    }
+
+    public String getLogname() {
+        return logname;
+    }
+
+    public void setLogname(String logname) {
+        this.logname = logname;
+    }
+
+    public String getIdentity() {
+        return identity;
+    }
+
+    public void setIdentity(String identity) {
+        this.identity = identity;
+    }
+
+    public String getRealname() {
+        return realname;
+    }
+
+    public void setRealname(String realname) {
+        this.realname = realname;
+    }
+
+    public Short getSex() {
+        return sex;
+    }
+
+    public void setSex(Short sex) {
+        this.sex = sex;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getPwd() {
+        return pwd;
+    }
+
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public Short getType() {
+        return type;
+    }
+
+    public void setType(Short type) {
+        this.type = type;
+    }
+}

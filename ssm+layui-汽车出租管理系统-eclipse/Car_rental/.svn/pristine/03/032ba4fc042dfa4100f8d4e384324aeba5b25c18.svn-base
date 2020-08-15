@@ -1,0 +1,17 @@
+package com.chengyong.sys.mapper;
+
+import com.chengyong.sys.entity.SysUsers;
+
+public interface SysUsersMapper {
+    int deleteByPrimaryKey(Short userid);
+
+    int insert(SysUsers record);
+
+    int insertSelective(SysUsers record);
+
+    SysUsers selectByPrimaryKey(Short userid);
+
+    int updateByPrimaryKeySelective(SysUsers record);
+
+    int updateByPrimaryKey(SysUsers record);
+}

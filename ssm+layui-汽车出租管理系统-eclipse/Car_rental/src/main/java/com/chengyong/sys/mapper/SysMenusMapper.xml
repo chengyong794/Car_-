@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chengyong.sys.mapper.SysMenusMapper">
+  <resultMap id="BaseResultMap" type="com.chengyong.sys.entity.SysMenus">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="PID" jdbcType="DECIMAL" property="pid" />
+    <result column="TITLE" jdbcType="VARCHAR" property="title" />
+    <result column="HREF" jdbcType="VARCHAR" property="href" />
+    <result column="SPREAD" jdbcType="DECIMAL" property="spread" />
+    <result column="TARGET" jdbcType="VARCHAR" property="target" />
+    <result column="ICON" jdbcType="VARCHAR" property="icon" />
+    <result column="AVAILABLE" jdbcType="DECIMAL" property="available" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, PID, TITLE, HREF, SPREAD, TARGET, ICON, AVAILABLE
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Short" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_MENUS
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  
+  <select id="selectByMenus" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_MENUS
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Short">
+    delete from SYS_MENUS
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.chengyong.sys.entity.SysMenus">
+    insert into SYS_MENUS (ID, PID, TITLE, 
+      HREF, SPREAD, TARGET, 
+      ICON, AVAILABLE)
+    values (#{id,jdbcType=DECIMAL}, #{pid,jdbcType=DECIMAL}, #{title,jdbcType=VARCHAR}, 
+      #{href,jdbcType=VARCHAR}, #{spread,jdbcType=DECIMAL}, #{target,jdbcType=VARCHAR}, 
+      #{icon,jdbcType=VARCHAR}, #{available,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chengyong.sys.entity.SysMenus">
+    insert into SYS_MENUS
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="pid != null">
+        PID,
+      </if>
+      <if test="title != null">
+        TITLE,
+      </if>
+      <if test="href != null">
+        HREF,
+      </if>
+      <if test="spread != null">
+        SPREAD,
+      </if>
+      <if test="target != null">
+        TARGET,
+      </if>
+      <if test="icon != null">
+        ICON,
+      </if>
+      <if test="available != null">
+        AVAILABLE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="pid != null">
+        #{pid,jdbcType=DECIMAL},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="href != null">
+        #{href,jdbcType=VARCHAR},
+      </if>
+      <if test="spread != null">
+        #{spread,jdbcType=DECIMAL},
+      </if>
+      <if test="target != null">
+        #{target,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null">
+        #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="available != null">
+        #{available,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chengyong.sys.entity.SysMenus">
+    update SYS_MENUS
+    <set>
+      <if test="pid != null">
+        PID = #{pid,jdbcType=DECIMAL},
+      </if>
+      <if test="title != null">
+        TITLE = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="href != null">
+        HREF = #{href,jdbcType=VARCHAR},
+      </if>
+      <if test="spread != null">
+        SPREAD = #{spread,jdbcType=DECIMAL},
+      </if>
+      <if test="target != null">
+        TARGET = #{target,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null">
+        ICON = #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="available != null">
+        AVAILABLE = #{available,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chengyong.sys.entity.SysMenus">
+    update SYS_MENUS
+    set PID = #{pid,jdbcType=DECIMAL},
+      TITLE = #{title,jdbcType=VARCHAR},
+      HREF = #{href,jdbcType=VARCHAR},
+      SPREAD = #{spread,jdbcType=DECIMAL},
+      TARGET = #{target,jdbcType=VARCHAR},
+      ICON = #{icon,jdbcType=VARCHAR},
+      AVAILABLE = #{available,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+</mapper>

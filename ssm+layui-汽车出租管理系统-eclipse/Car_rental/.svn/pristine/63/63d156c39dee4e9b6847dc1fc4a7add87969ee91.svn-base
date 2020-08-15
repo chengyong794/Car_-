@@ -1,0 +1,33 @@
+package com.chengyong.sys.entity;
+
+public class SysRole {
+    private Short roleid;
+
+    private String rolename;
+
+    private String roledesc;
+
+    public Short getRoleid() {
+        return roleid;
+    }
+
+    public void setRoleid(Short roleid) {
+        this.roleid = roleid;
+    }
+
+    public String getRolename() {
+        return rolename;
+    }
+
+    public void setRolename(String rolename) {
+        this.rolename = rolename;
+    }
+
+    public String getRoledesc() {
+        return roledesc;
+    }
+
+    public void setRoledesc(String roledesc) {
+        this.roledesc = roledesc;
+    }
+}

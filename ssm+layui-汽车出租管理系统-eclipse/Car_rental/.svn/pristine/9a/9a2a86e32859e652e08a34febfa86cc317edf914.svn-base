@@ -1,0 +1,136 @@
+package com.chengyong.car.services.impl;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.chengyong.car.entity.CarCustomer;
+import com.chengyong.car.mapper.CarCustomerMapper;
+import com.chengyong.car.service.CarCustomerService;
+import com.chengyong.car.util.ExcelFileGenerator;
+import com.chengyong.sys.util.DataView;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+
+@Service
+public class CarCustomerServiceImpl implements CarCustomerService{
+    
+	@Autowired
+	private CarCustomerMapper carCustomerMapper;
+	
+	@Override
+	public int deleteByPrimaryKey(String identity) {
+		return carCustomerMapper.deleteByPrimaryKey(identity);
+	}
+
+	@Override
+	public int insert(CarCustomer record) {
+		return carCustomerMapper.insert(record);
+	}
+
+	@Override
+	public int insertSelective(CarCustomer record) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public DataView selectByPrimaryKey(CarCustomer carCustomer) {
+		Page<Object> page = PageHelper.startPage(carCustomer.getPage(),carCustomer.getLimit());
+		List<CarCustomer> list = carCustomerMapper.selectByPrimaryKey(carCustomer);
+		PageInfo<CarCustomer> info = new PageInfo<CarCustomer>(list);
+		return new DataView(info.getTotal(),list);
+	}
+
+	@Override
+	public int updateByPrimaryKeySelective(CarCustomer record) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int updateByPrimaryKey(CarCustomer record) {
+		return carCustomerMapper.updateByPrimaryKey(record);
+	}
+
+	@Override
+	public int deleteByPrimaryKeyLot(CarCustomer record) {
+		int j = 0;
+		for (int i = 0; i < record.getIdentitys().length; i++) {
+			j = carCustomerMapper.deleteByPrimaryKey(record.getIdentitys()[i]);
+		}
+		return j;
+	}
+
+	/**
+	 * 客户数据导出
+	 * @throws IOException 
+	 */
+	@Override
+	public void exportCustomer(CarCustomer carCustomer,HttpServletResponse response){
+		ArrayList<String> fieldName = new ArrayList<String>(); //设置名称
+		fieldName.add("身份证");
+		fieldName.add("客户姓名");
+		fieldName.add("客户电话");
+		fieldName.add("客户地址");
+		fieldName.add("客户职位");
+		fieldName.add("性别");
+		List<CarCustomer> list = carCustomerMapper.selectByPrimaryKey(carCustomer);
+		ArrayList<ArrayList<String>> fieldData = new ArrayList<>();
+		for (CarCustomer cust: list) {
+			ArrayList<String> customer = new ArrayList<>();
+			customer.add(cust.getIdentity());
+			customer.add(cust.getCustname());
+			customer.add(cust.getPhone());
+			customer.add(cust.getAddress());
+			customer.add(cust.getCareer());
+			if(cust.getSex()==1) {
+				customer.add("男");
+			}else {
+				customer.add("女");
+			}
+			
+			fieldData.add(customer);
+		}
+		
+		ExcelFileGenerator excelFile = new ExcelFileGenerator(fieldName,fieldData);
+		//设置xls的文件名称
+		SimpleDateFormat format = new SimpleDateFormat("yyyy:MM:dd HH:mm:ss");
+		Date date = new Date();
+		String time = format.format(date);
+		String xlsfileName = time+"客户数据.xls";
+		//处理中文乱码
+		try {
+			xlsfileName = new String(xlsfileName.getBytes("utf-8"),"iso-8859-1");
+			//响应文件格式
+			response.setContentType("application/vnd.ms-excel");
+			response.setHeader("Content-disposition", "attachment;filename="+xlsfileName);
+			
+			//获取输出流
+			OutputStream out = response.getOutputStream();
+			
+			//生成下载
+			excelFile.expordExcel(out);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+	}
+   
+}

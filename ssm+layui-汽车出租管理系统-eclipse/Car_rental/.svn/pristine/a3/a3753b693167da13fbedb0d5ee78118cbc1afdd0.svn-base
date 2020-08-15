@@ -1,0 +1,24 @@
+package com.chengyong.sys.service;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.chengyong.sys.entity.SysMenus;
+
+@Service
+public interface sysMenusService {
+	int deleteByPrimaryKey(Short id);
+
+    int insert(SysMenus record);
+
+    int insertSelective(SysMenus record);
+
+    SysMenus selectByPrimaryKey(Short id);
+
+    int updateByPrimaryKeySelective(SysMenus record);
+
+    int updateByPrimaryKey(SysMenus record);
+    
+    List<SysMenus> selectByMenus();
+}

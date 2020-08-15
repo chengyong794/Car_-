@@ -1,0 +1,17 @@
+package com.chengyong.sys.mapper;
+
+import com.chengyong.sys.entity.SysRoleUsers;
+
+public interface SysRoleUsersMapper {
+    int deleteByPrimaryKey(Short uid);
+
+    int insert(SysRoleUsers record);
+
+    int insertSelective(SysRoleUsers record);
+
+    SysRoleUsers selectByPrimaryKey(Short uid);
+
+    int updateByPrimaryKeySelective(SysRoleUsers record);
+
+    int updateByPrimaryKey(SysRoleUsers record);
+}

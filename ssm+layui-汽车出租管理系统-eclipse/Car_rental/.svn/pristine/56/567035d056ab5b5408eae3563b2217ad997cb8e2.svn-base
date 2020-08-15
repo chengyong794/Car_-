@@ -1,0 +1,56 @@
+package com.chengyong.sys.serviceImpl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.chengyong.sys.entity.SysUsers;
+import com.chengyong.sys.mapper.SysUsersMapper;
+import com.chengyong.sys.service.SysUsersService;
+
+@Service
+public class SysUsersServiceImpl implements SysUsersService{
+    @Autowired
+    private SysUsersMapper sysUsersMapper;
+    
+	@Override
+	public int deleteByPrimaryKey(Short userid) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int insert(SysUsers record) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int insertSelective(SysUsers record) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public SysUsers selectByPrimaryKey(Short userid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int updateByPrimaryKeySelective(SysUsers record) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int updateByPrimaryKey(SysUsers record) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public SysUsers LoginUser(SysUsers sysUsers) {
+		return sysUsersMapper.LoginUser(sysUsers);
+	}
+
+}

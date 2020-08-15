@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chengyong.car.mapper.CarRentMapper">
+  <resultMap id="BaseResultMap" type="com.chengyong.car.entity.CarRent">
+    <id column="RENTID" jdbcType="VARCHAR" property="rentid" />
+    <result column="PRICE" jdbcType="DECIMAL" property="price" />
+    <result column="STARTDATE" jdbcType="TIMESTAMP" property="startdate" />
+    <result column="RETURNDATE" jdbcType="TIMESTAMP" property="returndate" />
+    <result column="RENTFLAG" jdbcType="DECIMAL" property="rentflag" />
+    <result column="CUS_IDENTITY" jdbcType="VARCHAR" property="cusIdentity" />
+    <result column="CAR_NUMBER" jdbcType="VARCHAR" property="carNumber" />
+    <result column="OPERNAME" jdbcType="VARCHAR" property="opername" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    RENTID, PRICE, STARTDATE, RETURNDATE, RENTFLAG, CUS_IDENTITY, CAR_NUMBER, OPERNAME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from CAR_RENT
+    where RENTID = #{rentid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from CAR_RENT
+    where RENTID = #{rentid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.chengyong.car.entity.CarRent">
+    insert into CAR_RENT (RENTID, PRICE, STARTDATE, 
+      RETURNDATE, RENTFLAG, CUS_IDENTITY, 
+      CAR_NUMBER, OPERNAME)
+    values (#{rentid,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, #{startdate,jdbcType=TIMESTAMP}, 
+      #{returndate,jdbcType=TIMESTAMP}, #{rentflag,jdbcType=DECIMAL}, #{cusIdentity,jdbcType=VARCHAR}, 
+      #{carNumber,jdbcType=VARCHAR}, #{opername,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chengyong.car.entity.CarRent">
+    insert into CAR_RENT
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="rentid != null">
+        RENTID,
+      </if>
+      <if test="price != null">
+        PRICE,
+      </if>
+      <if test="startdate != null">
+        STARTDATE,
+      </if>
+      <if test="returndate != null">
+        RETURNDATE,
+      </if>
+      <if test="rentflag != null">
+        RENTFLAG,
+      </if>
+      <if test="cusIdentity != null">
+        CUS_IDENTITY,
+      </if>
+      <if test="carNumber != null">
+        CAR_NUMBER,
+      </if>
+      <if test="opername != null">
+        OPERNAME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="rentid != null">
+        #{rentid,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="startdate != null">
+        #{startdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="returndate != null">
+        #{returndate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rentflag != null">
+        #{rentflag,jdbcType=DECIMAL},
+      </if>
+      <if test="cusIdentity != null">
+        #{cusIdentity,jdbcType=VARCHAR},
+      </if>
+      <if test="carNumber != null">
+        #{carNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="opername != null">
+        #{opername,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chengyong.car.entity.CarRent">
+    update CAR_RENT
+    <set>
+      <if test="price != null">
+        PRICE = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="startdate != null">
+        STARTDATE = #{startdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="returndate != null">
+        RETURNDATE = #{returndate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rentflag != null">
+        RENTFLAG = #{rentflag,jdbcType=DECIMAL},
+      </if>
+      <if test="cusIdentity != null">
+        CUS_IDENTITY = #{cusIdentity,jdbcType=VARCHAR},
+      </if>
+      <if test="carNumber != null">
+        CAR_NUMBER = #{carNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="opername != null">
+        OPERNAME = #{opername,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where RENTID = #{rentid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chengyong.car.entity.CarRent">
+    update CAR_RENT
+    set PRICE = #{price,jdbcType=DECIMAL},
+      STARTDATE = #{startdate,jdbcType=TIMESTAMP},
+      RETURNDATE = #{returndate,jdbcType=TIMESTAMP},
+      RENTFLAG = #{rentflag,jdbcType=DECIMAL},
+      CUS_IDENTITY = #{cusIdentity,jdbcType=VARCHAR},
+      CAR_NUMBER = #{carNumber,jdbcType=VARCHAR},
+      OPERNAME = #{opername,jdbcType=VARCHAR}
+    where RENTID = #{rentid,jdbcType=VARCHAR}
+  </update>
+</mapper>

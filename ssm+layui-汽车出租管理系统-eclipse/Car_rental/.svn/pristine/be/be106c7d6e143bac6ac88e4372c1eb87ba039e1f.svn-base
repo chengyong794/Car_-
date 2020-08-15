@@ -1,0 +1,45 @@
+package com.chengyong.sys.entity;
+
+import java.util.Date;
+
+public class SysLogLogin {
+    private Short loginid;
+
+    private String loginname;
+
+    private String loginip;
+
+    private Date logintime;
+
+    public Short getLoginid() {
+        return loginid;
+    }
+
+    public void setLoginid(Short loginid) {
+        this.loginid = loginid;
+    }
+
+    public String getLoginname() {
+        return loginname;
+    }
+
+    public void setLoginname(String loginname) {
+        this.loginname = loginname;
+    }
+
+    public String getLoginip() {
+        return loginip;
+    }
+
+    public void setLoginip(String loginip) {
+        this.loginip = loginip;
+    }
+
+    public Date getLogintime() {
+        return logintime;
+    }
+
+    public void setLogintime(Date logintime) {
+        this.logintime = logintime;
+    }
+}

@@ -1,0 +1,22 @@
+package com.chengyong.sys.service;
+
+import org.springframework.stereotype.Service;
+
+import com.chengyong.sys.entity.SysUsers;
+
+@Service
+public interface SysUsersService {
+	int deleteByPrimaryKey(Short userid);
+
+    int insert(SysUsers record);
+
+    int insertSelective(SysUsers record);
+
+    SysUsers selectByPrimaryKey(Short userid);
+
+    int updateByPrimaryKeySelective(SysUsers record);
+
+    int updateByPrimaryKey(SysUsers record);
+    
+    SysUsers LoginUser(SysUsers sysUsers);
+}

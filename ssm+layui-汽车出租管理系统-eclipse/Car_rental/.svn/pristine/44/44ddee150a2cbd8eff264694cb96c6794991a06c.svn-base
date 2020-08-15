@@ -1,0 +1,66 @@
+package com.chengyong.sys.service;
+
+import java.util.List;
+
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.stereotype.Service;
+
+import com.chengyong.sys.entity.SysUsers;
+import com.chengyong.sys.util.DataView;
+import com.chengyong.sys.util.SysUsersVo;
+/**
+ * 继承springSecurity的 UserDetails 用于数据对接
+ * @author PC
+ *
+ */
+@Service
+public interface SysUsersService extends UserDetailsService{
+	int deleteByPrimaryKey(Short userid);
+	
+	int deleteByPrimaryKeyLot(SysUsersVo sysUsersVo);
+
+    int insert(SysUsers record);
+
+    int insertSelective(SysUsers record);
+
+    DataView selectByPrimaryKey(SysUsers sysUsers);
+
+    int updateByPrimaryKeySelective(SysUsers record);
+
+    int updateByPrimaryKey(SysUsers record);
+    
+    SysUsers LoginUser(SysUsers sysUsers);
+    
+    int uesrReset(Short userid);
+    
+    int uesrPwdUpdate(SysUsersVo record);
+    
+    /**
+     * 验证添加新的用户名是否重复
+     * @param sysUsers
+     * @return
+     */
+    SysUsers addUser(SysUsers sysUsers);
+    
+    /**
+     * 验证是否有该密码
+     * @param record
+     * @return
+     */
+    List<SysUsers> oldPwd(SysUsersVo record);
+    
+    /**
+     * 修改用户资料信息
+     * @param sysUsers
+     * @return
+     */
+    int updateByLogname(SysUsers sysUsers);
+    
+    /**
+     * 用户头像修改
+     * @param sysUsers
+     * @return
+     */
+    int uesrHeadPicUpdate(SysUsers sysUsers);
+}

@@ -1,0 +1,135 @@
+package com.chengyong.car.servicesimpl;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.chengyong.car.entity.CarCheck;
+import com.chengyong.car.entity.CarCustomer;
+import com.chengyong.car.entity.CarRent;
+import com.chengyong.car.entity.Cars;
+import com.chengyong.car.mapper.CarCheckMapper;
+import com.chengyong.car.mapper.CarCustomerMapper;
+import com.chengyong.car.mapper.CarRentMapper;
+import com.chengyong.car.mapper.CarsMapper;
+import com.chengyong.car.services.CarCheckService;
+import com.chengyong.sys.util.DataView;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+
+@Service
+public class CarCheckServiceImpl implements CarCheckService{
+	@Autowired
+	private CarCheckMapper carCheckMapper;
+	
+	@Autowired
+	private CarRentMapper carRentMapper;
+	
+	@Autowired
+	private CarsMapper carsMapper;
+	
+	@Autowired
+	private CarCustomerMapper carCustomerMapper;
+
+	@Override
+	public int deleteByPrimaryKey(String checkid) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int insert(CarCheck record) {
+		CarRent carRent = carRentMapper.selectByRentid(record.getRentid()); //获取出租单信息
+		//并修改出租单的状态
+		carRent.setRentflag((short)1);
+		carRentMapper.updateByPrimaryKey(carRent);
+		
+		Cars cars = new Cars();
+		cars.setCarnumber(carRent.getCarNumber());
+		cars = carsMapper.selectBycarnumber(cars);  //获取车辆信息
+		//并修改车辆的出租状态
+		cars.setIsrentiing((short)0);
+		carsMapper.updateByIsrentiing(cars);
+		
+		
+		return carCheckMapper.insert(record);
+	}
+
+	@Override
+	public int insertSelective(CarCheck record) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public DataView selectByPrimaryKey(CarCheck record) {
+		Page<Object> page = PageHelper.startPage(record.getPage(),record.getLimit());
+		List<CarCheck> list = carCheckMapper.selectByPrimaryKey(record);
+		PageInfo<CarCheck> info = new PageInfo<CarCheck>(list);
+		return new DataView(info.getTotal(),list);
+	}
+
+	@Override
+	public int updateByPrimaryKeySelective(CarCheck record) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int updateByPrimaryKey(CarCheck record) {
+		return carCheckMapper.updateByPrimaryKey(record);
+	}
+
+	@Override
+	public CarRent CarRentid(String rentid) {
+		return carRentMapper.selectByRentid(rentid);
+	}
+
+	@Override
+	public Map<String, Map<String, Object>> maps(String rentid) {
+		Map<String, Object> maprent = new HashMap<>();
+		//出租单信息组装
+		CarRent carRent = carRentMapper.selectByRentid(rentid); //获取出租单信息
+		maprent.put("rentid", carRent.getRentid());
+		maprent.put("price", carRent.getPrice());
+		maprent.put("begindate", carRent.getStartdate());
+		maprent.put("returndate", carRent.getReturndate());
+		maprent.put("opername", carRent.getOpername());
+		
+		Map<String, Object> mapcar = new HashMap<>();
+		//车辆信息组装
+		Cars cars = new Cars();
+		cars.setCarnumber(carRent.getCarNumber());
+		cars = carsMapper.selectBycarnumber(cars);  //获取车辆信息
+		mapcar.put("carnumber", cars.getCarnumber());
+		mapcar.put("cartype", cars.getCartype());
+		mapcar.put("color", cars.getColor());
+		mapcar.put("price", cars.getPrice());
+		mapcar.put("rentprice", cars.getRentprice());
+		mapcar.put("deposit", cars.getDeposit());
+		mapcar.put("description", cars.getDescription());
+		mapcar.put("carimg", cars.getCarimg());
+		
+		Map<String, Object> mapcust = new HashMap<>();
+		CarCustomer carCustomer = carCustomerMapper.selectByIDENTITY(carRent.getCusIdentity()); //获取该客户信息
+		//并进行组装
+		mapcust.put("identity", carCustomer.getIdentity());
+		mapcust.put("custname", carCustomer.getCustname());
+		mapcust.put("sex", carCustomer.getSex());
+		mapcust.put("address", carCustomer.getAddress());
+		mapcust.put("phone", carCustomer.getPhone());
+		mapcust.put("career", carCustomer.getCareer());
+		
+		Map<String, Map<String, Object>> maps = new HashMap<>();
+		maps.put("customer", mapcust);
+		maps.put("car", mapcar);
+		maps.put("rent", maprent);
+		
+		return maps;
+	}
+  
+}

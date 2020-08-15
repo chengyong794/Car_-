@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chengyong.chart.mapper.chartMapper">
+  
+  <select id="selectBycust" resultType="com.chengyong.chart.entity.chart">
+    select 
+    address as name, count(1) as value
+    from CAR_CUSTOMER  group by address
+  </select>
+  
+  <select id="selectByopername" resultType="com.chengyong.chart.entity.chart">
+    select 
+    opername as name, sum(price) as value
+    from CAR_RENT where to_char(startdate,'yyyy')=#{year}  group by opername
+  </select>
+  
+  <select id="selectBygrade" parameterType="java.lang.String" resultType="java.lang.Double">
+   select sum(price) from CAR_RENT where to_char(startdate,'yyyy-mm')=concat(#{year},'-01')
+UNION ALL
+select sum(price) from CAR_RENT where to_char(startdate,'yyyy-mm')=concat(#{year},'-02')
+UNION ALL
+select sum(price) from CAR_RENT where to_char(startdate,'yyyy-mm')=concat(#{year},'-03')
+UNION ALL
+select sum(price) from CAR_RENT where to_char(startdate,'yyyy-mm')=concat(#{year},'-04')
+UNION ALL
+select sum(price) from CAR_RENT where to_char(startdate,'yyyy-mm')=concat(#{year},'-05')
+UNION ALL
+select sum(price) from CAR_RENT where to_char(startdate,'yyyy-mm')=concat(#{year},'-06')
+UNION ALL
+select sum(price) from CAR_RENT where to_char(startdate,'yyyy-mm')=concat(#{year},'-07')
+UNION ALL
+select sum(price) from CAR_RENT where to_char(startdate,'yyyy-mm')=concat(#{year},'-08')
+UNION ALL
+select sum(price) from CAR_RENT where to_char(startdate,'yyyy-mm')=concat(#{year},'-09')
+UNION ALL
+select sum(price) from CAR_RENT where to_char(startdate,'yyyy-mm')=concat(#{year},'-10')
+UNION ALL
+select sum(price) from CAR_RENT where to_char(startdate,'yyyy-mm')=concat(#{year},'11')
+UNION ALL
+select sum(price) from CAR_RENT where to_char(startdate,'yyyy-mm')=concat(#{year},'12')
+  </select>
+  
+</mapper>

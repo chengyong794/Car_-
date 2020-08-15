@@ -1,0 +1,17 @@
+package com.chengyong.car.mapper;
+
+import com.chengyong.car.entity.CarCheck;
+
+public interface CarCheckMapper {
+    int deleteByPrimaryKey(String checkid);
+
+    int insert(CarCheck record);
+
+    int insertSelective(CarCheck record);
+
+    CarCheck selectByPrimaryKey(String checkid);
+
+    int updateByPrimaryKeySelective(CarCheck record);
+
+    int updateByPrimaryKey(CarCheck record);
+}

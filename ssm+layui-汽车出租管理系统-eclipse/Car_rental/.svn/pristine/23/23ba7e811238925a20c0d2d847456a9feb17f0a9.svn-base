@@ -1,0 +1,17 @@
+package com.chengyong.sys.mapper;
+
+import com.chengyong.sys.entity.SysLogLogin;
+
+public interface SysLogLoginMapper {
+    int deleteByPrimaryKey(Short loginid);
+
+    int insert(SysLogLogin record);
+
+    int insertSelective(SysLogLogin record);
+
+    SysLogLogin selectByPrimaryKey(Short loginid);
+
+    int updateByPrimaryKeySelective(SysLogLogin record);
+
+    int updateByPrimaryKey(SysLogLogin record);
+}

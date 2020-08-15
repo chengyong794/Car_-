@@ -1,0 +1,21 @@
+package com.chengyong.car.service;
+
+import org.springframework.stereotype.Service;
+
+import com.chengyong.car.entity.CarRent;
+
+@Service
+public interface CarRentService {
+	int deleteByPrimaryKey(String rentid);
+
+    int insert(CarRent record);
+
+    int insertSelective(CarRent record);
+
+    CarRent selectByPrimaryKey(String rentid);
+
+    int updateByPrimaryKeySelective(CarRent record);
+
+    int updateByPrimaryKey(CarRent record);
+    
+}

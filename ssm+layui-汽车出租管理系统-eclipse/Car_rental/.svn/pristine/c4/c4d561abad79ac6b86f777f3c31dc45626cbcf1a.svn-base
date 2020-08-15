@@ -1,0 +1,20 @@
+package com.chengyong.car.mapper;
+
+import org.springframework.stereotype.Repository;
+
+import com.chengyong.car.entity.CarRent;
+
+@Repository
+public interface CarRentMapper {
+    int deleteByPrimaryKey(String rentid);
+
+    int insert(CarRent record);
+
+    int insertSelective(CarRent record);
+
+    CarRent selectByPrimaryKey(String rentid);
+
+    int updateByPrimaryKeySelective(CarRent record);
+
+    int updateByPrimaryKey(CarRent record);
+}

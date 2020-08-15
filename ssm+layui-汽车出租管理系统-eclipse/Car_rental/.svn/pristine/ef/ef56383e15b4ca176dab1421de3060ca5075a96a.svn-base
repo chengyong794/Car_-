@@ -1,0 +1,29 @@
+package com.chengyong.sys.util;
+
+import com.chengyong.sys.entity.SysUsers;
+
+public class SysUsersVo extends SysUsers{
+
+   private Short userid;
+	
+   private Short ids[];
+
+   
+public Short getUserid() {
+	return userid;
+}
+
+public void setUserid(Short userid) {
+	this.userid = userid;
+}
+
+public Short[] getIds() {
+	return ids;
+}
+
+public void setIds(Short[] ids) {
+	this.ids = ids;
+}
+   
+   
+}

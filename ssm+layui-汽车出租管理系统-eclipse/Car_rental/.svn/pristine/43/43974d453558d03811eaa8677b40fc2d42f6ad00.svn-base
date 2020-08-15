@@ -1,0 +1,96 @@
+package com.chengyong.sys.controller;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.ibatis.annotations.Param;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.chengyong.sys.entity.SysLogLogin;
+import com.chengyong.sys.service.SysLogLoginService;
+import com.chengyong.sys.util.CUD_CallbackInfo;
+import com.chengyong.sys.util.DataView;
+
+/**
+ * 登录日志
+ * @author PC
+ *
+ */
+@Controller
+@RequestMapping("loginfo/")
+public class sysLoginfoController {
+    @Autowired
+    private SysLogLoginService sysLogLoginService;
+    
+    /**
+     * 日志信息
+     * @param sysLogLogin
+     * @return
+     * @throws ParseException 
+     */
+    @RequestMapping("loginfoList")
+    @ResponseBody
+    public DataView loginfoList(SysLogLogin sysLogLogin) {
+    	
+    	try{
+    		return sysLogLoginService.selectByPrimaryKey(sysLogLogin);
+    	}catch(Exception e) {
+    		e.printStackTrace();
+    		return null;
+    	}
+    	
+    }
+    
+    
+    /**
+     * 日志删除
+     * @param 
+     * @return 
+     */
+    @RequestMapping("loginfoDelete")
+    @ResponseBody
+    public Map<String,String> loginfoDelete(@Param("loginid") Short loginid) {
+    	Map<String,String> map = new HashMap<String,String>();
+		try {
+			sysLogLoginService.deleteByPrimaryKey(loginid);
+			map.put("msg", CUD_CallbackInfo.SUCCESS_DELETECallback);
+			return map;
+		}catch(Exception e) {
+			e.printStackTrace();
+			map.put("msg", CUD_CallbackInfo.FAILURE_DELETECallback);
+			return map;
+		}
+    	
+    }
+    
+    /**
+     * 日志删除批量
+     * @param 
+     * @return 
+     */
+    @RequestMapping("loginfoDeleteLot")
+    @ResponseBody
+    public Map<String,String> loginfoDeleteLot(SysLogLogin sysLogLogin) {
+    	Map<String,String> map = new HashMap<String,String>();
+		try {
+			sysLogLoginService.deleteByPrimaryKeyLot(sysLogLogin);
+			map.put("msg", CUD_CallbackInfo.SUCCESS_DELETECallback);
+			return map;
+		}catch(Exception e) {
+			e.printStackTrace();
+			map.put("msg", CUD_CallbackInfo.FAILURE_DELETECallback);
+			return map;
+		}
+    	
+    }
+}

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chengyong.sys.mapper.SysRoleMapper">
+  <resultMap id="BaseResultMap" type="com.chengyong.sys.entity.SysRole">
+    <id column="ROLEID" jdbcType="DECIMAL" property="roleid" />
+    <result column="ROLENAME" jdbcType="VARCHAR" property="rolename" />
+    <result column="ROLEDESC" jdbcType="VARCHAR" property="roledesc" />
+    <result column="ROLETYPE" jdbcType="DECIMAL" property="roletype" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ROLEID, ROLENAME, ROLEDESC,ROLETYPE
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="com.chengyong.sys.entity.SysRole" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_ROLE
+    <where>
+      <if test="rolename != null">
+      and ROLENAME like concat(concat('%',#{rolename,jdbcType=VARCHAR}),'%')
+      </if>
+      <if test="roledesc != null">
+      and ROLEDESC like concat(concat('%',#{roledesc,jdbcType=VARCHAR}),'%')
+      </if>
+      <if test="roletype != null">
+      and ROLETYPE like concat(concat('%',#{roletype,jdbcType=DECIMAL}),'%')
+      </if>
+    </where>
+  </select>
+  
+  <select id="SECURITY_ROLE" parameterType="java.lang.Short" resultType="com.chengyong.sys.entity.SysRole">
+     SELECT R.* FROM SYS_USERS U JOIN SYS_ROLE_USERS R_U ON U.USERID = R_U.UIDS JOIN SYS_ROLE R ON R.ROLEID = R_U.RID WHERE USERID = #{userid,jdbcType=DECIMAL}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Short">
+    delete from SYS_ROLE
+    where ROLEID = #{roleid,jdbcType=DECIMAL}
+  </delete>
+  
+  <insert id="insert" parameterType="com.chengyong.sys.entity.SysRole">
+    insert into SYS_ROLE ( ROLENAME, ROLEDESC,ROLETYPE
+      )
+    values ( #{rolename,jdbcType=VARCHAR}, #{roledesc,jdbcType=VARCHAR},#{roletype,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.chengyong.sys.entity.SysRole">
+    insert into SYS_ROLE
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="roleid != null">
+        ROLEID,
+      </if>
+      <if test="rolename != null">
+        ROLENAME,
+      </if>
+      <if test="roledesc != null">
+        ROLEDESC,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="roleid != null">
+        #{roleid,jdbcType=DECIMAL},
+      </if>
+      <if test="rolename != null">
+        #{rolename,jdbcType=VARCHAR},
+      </if>
+      <if test="roledesc != null">
+        #{roledesc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chengyong.sys.entity.SysRole">
+    update SYS_ROLE
+    <set>
+      <if test="rolename != null">
+        ROLENAME = #{rolename,jdbcType=VARCHAR},
+      </if>
+      <if test="roledesc != null">
+        ROLEDESC = #{roledesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ROLEID = #{roleid,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chengyong.sys.entity.SysRole">
+    update SYS_ROLE
+    set ROLENAME = #{rolename,jdbcType=VARCHAR},
+      ROLEDESC = #{roledesc,jdbcType=VARCHAR},
+      ROLETYPE = #{roletype,jdbcType=DECIMAL}
+    where ROLEID = #{roleid,jdbcType=DECIMAL}
+  </update>
+</mapper>

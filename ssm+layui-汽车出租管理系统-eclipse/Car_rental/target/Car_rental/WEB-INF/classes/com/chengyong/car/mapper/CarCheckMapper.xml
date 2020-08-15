@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chengyong.car.mapper.CarCheckMapper">
+  <resultMap id="BaseResultMap" type="com.chengyong.car.entity.CarCheck">
+    <id column="CHECKID" jdbcType="VARCHAR" property="checkid" />
+    <result column="CHECKDATE" jdbcType="TIMESTAMP" property="checkdate" />
+    <result column="CHECKDESC" jdbcType="VARCHAR" property="checkdesc" />
+    <result column="PROBLEM" jdbcType="VARCHAR" property="problem" />
+    <result column="PAYMONEY" jdbcType="DECIMAL" property="paymoney" />
+    <result column="OPERNAME" jdbcType="VARCHAR" property="opername" />
+    <result column="RENTID" jdbcType="VARCHAR" property="rentid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    CHECKID, CHECKDATE, CHECKDESC, PROBLEM, PAYMONEY, OPERNAME, RENTID
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from CAR_CHECK
+    <where>
+      <if test="checkid != null and checkid != ''">
+       and CHECKID like concat('%',concat(#{checkid,jdbcType=VARCHAR},'%'))
+      </if>
+      <if test="startdate != null and startdate != ''">
+       and CHECKDATE <![CDATA[>=]]> to_date(#{startdate,jdbcType=TIMESTAMP},'yyyy:MM:dd HH24:mi:ss')
+      </if>
+      <if test="enddate != null and enddate != ''">
+       and CHECKDATE <![CDATA[<=]]> to_date(#{enddate,jdbcType=TIMESTAMP},'yyyy:MM:dd HH24:mi:ss')
+      </if>
+      <if test="checkdesc != null and checkdesc != ''">
+       and CHECKDESC like concat(concat(#{checkdesc,jdbcType=VARCHAR},'%'),'%')
+      </if>
+      <if test="problem != null and problem != ''">
+       and PROBLEM like concat(concat(#{problem,jdbcType=VARCHAR},'%'),'%')
+      </if>
+      <if test="rentid != null and rentid != ''">
+       and RENTID like concat(concat(#{rentid,jdbcType=VARCHAR},'%'),'%')
+      </if>
+    </where>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from CAR_CHECK
+    where CHECKID = #{checkid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.chengyong.car.entity.CarCheck">
+    insert into CAR_CHECK (CHECKID, CHECKDATE, CHECKDESC, 
+      PROBLEM, PAYMONEY, OPERNAME, 
+      RENTID)
+    values (#{checkid,jdbcType=VARCHAR}, to_date(#{checkdate,jdbcType=TIMESTAMP},'yyyy:MM:dd HH24:mi:ss'), #{checkdesc,jdbcType=VARCHAR}, 
+      #{problem,jdbcType=VARCHAR}, #{paymoney,jdbcType=DECIMAL}, #{opername,jdbcType=VARCHAR}, 
+      #{rentid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chengyong.car.entity.CarCheck">
+    insert into CAR_CHECK
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="checkid != null">
+        CHECKID,
+      </if>
+      <if test="checkdate != null">
+        CHECKDATE,
+      </if>
+      <if test="checkdesc != null">
+        CHECKDESC,
+      </if>
+      <if test="problem != null">
+        PROBLEM,
+      </if>
+      <if test="paymoney != null">
+        PAYMONEY,
+      </if>
+      <if test="opername != null">
+        OPERNAME,
+      </if>
+      <if test="rentid != null">
+        RENTID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="checkid != null">
+        #{checkid,jdbcType=VARCHAR},
+      </if>
+      <if test="checkdate != null">
+        #{checkdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkdesc != null">
+        #{checkdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="problem != null">
+        #{problem,jdbcType=VARCHAR},
+      </if>
+      <if test="paymoney != null">
+        #{paymoney,jdbcType=DECIMAL},
+      </if>
+      <if test="opername != null">
+        #{opername,jdbcType=VARCHAR},
+      </if>
+      <if test="rentid != null">
+        #{rentid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chengyong.car.entity.CarCheck">
+    update CAR_CHECK
+    <set>
+      <if test="checkdate != null">
+        CHECKDATE = #{checkdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkdesc != null">
+        CHECKDESC = #{checkdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="problem != null">
+        PROBLEM = #{problem,jdbcType=VARCHAR},
+      </if>
+      <if test="paymoney != null">
+        PAYMONEY = #{paymoney,jdbcType=DECIMAL},
+      </if>
+      <if test="opername != null">
+        OPERNAME = #{opername,jdbcType=VARCHAR},
+      </if>
+      <if test="rentid != null">
+        RENTID = #{rentid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CHECKID = #{checkid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chengyong.car.entity.CarCheck">
+    update CAR_CHECK
+    set CHECKDATE = to_date(#{checkdate,jdbcType=TIMESTAMP},'yyyy:MM:dd HH24:mi:ss'),
+      CHECKDESC = #{checkdesc,jdbcType=VARCHAR},
+      PROBLEM = #{problem,jdbcType=VARCHAR},
+      PAYMONEY = #{paymoney,jdbcType=DECIMAL},
+      OPERNAME = #{opername,jdbcType=VARCHAR},
+      RENTID = #{rentid,jdbcType=VARCHAR}
+    where CHECKID = #{checkid,jdbcType=VARCHAR}
+  </update>
+</mapper>

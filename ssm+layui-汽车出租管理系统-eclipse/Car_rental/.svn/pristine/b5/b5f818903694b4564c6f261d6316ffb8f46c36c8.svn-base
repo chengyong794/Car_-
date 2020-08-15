@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chengyong.car.mapper.CarsMapper">
+  <resultMap id="BaseResultMap" type="com.chengyong.car.entity.Cars">
+    <id column="CARNUMBER" jdbcType="VARCHAR" property="carnumber" />
+    <result column="CARTYPE" jdbcType="VARCHAR" property="cartype" />
+    <result column="COLOR" jdbcType="VARCHAR" property="color" />
+    <result column="PRICE" jdbcType="DECIMAL" property="price" />
+    <result column="RENTPRICE" jdbcType="DECIMAL" property="rentprice" />
+    <result column="DEPOSIT" jdbcType="DECIMAL" property="deposit" />
+    <result column="ISRENTIING" jdbcType="DECIMAL" property="isrentiing" />
+    <result column="DESCRIPTION" jdbcType="VARCHAR" property="description" />
+    <result column="CARIMG" jdbcType="VARCHAR" property="carimg" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    CARNUMBER, CARTYPE, COLOR, PRICE, RENTPRICE, DEPOSIT, ISRENTIING, DESCRIPTION, CARIMG
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="com.chengyong.car.entity.Cars" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from CARS
+    <where>
+      <if test="carnumber != null">
+        and CARNUMBER like concat(concat('%',#{carnumber,jdbcType=VARCHAR}),'%')
+      </if>
+      <if test="cartype != null">
+        and CARTYPE like concat(concat('%',#{cartype,jdbcType=VARCHAR}),'%')
+      </if>
+      <if test="color != null">
+      and COLOR like concat(concat('%',#{color,jdbcType=VARCHAR}),'%')
+      </if>
+      <if test="isrentiing != null">
+      and ISRENTIING =  #{isrentiing,jdbcType=DECIMAL}
+      </if>
+      <if test="description != null">
+      and DESCRIPTION like concat(concat('%',#{description,jdbcType=VARCHAR}),'%')
+      </if>
+    </where>
+  </select>
+  
+  <select id="selectBycarnumber" parameterType="com.chengyong.car.entity.Cars" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from CARS
+    where CARNUMBER = #{carnumber,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from CARS
+    where CARNUMBER = #{carnumber,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.chengyong.car.entity.Cars">
+    insert into CARS (CARNUMBER, CARTYPE, COLOR, 
+      PRICE, RENTPRICE, DEPOSIT, 
+      ISRENTIING, DESCRIPTION, CARIMG
+      )
+    values (#{carnumber,jdbcType=VARCHAR}, #{cartype,jdbcType=VARCHAR}, #{color,jdbcType=VARCHAR}, 
+      #{price,jdbcType=DECIMAL}, #{rentprice,jdbcType=DECIMAL}, #{deposit,jdbcType=DECIMAL}, 
+      #{isrentiing,jdbcType=DECIMAL}, #{description,jdbcType=VARCHAR}, #{carimg,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.chengyong.car.entity.Cars">
+    insert into CARS
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="carnumber != null">
+        CARNUMBER,
+      </if>
+      <if test="cartype != null">
+        CARTYPE,
+      </if>
+      <if test="color != null">
+        COLOR,
+      </if>
+      <if test="price != null">
+        PRICE,
+      </if>
+      <if test="rentprice != null">
+        RENTPRICE,
+      </if>
+      <if test="deposit != null">
+        DEPOSIT,
+      </if>
+      <if test="isrentiing != null">
+        ISRENTIING,
+      </if>
+      <if test="description != null">
+        DESCRIPTION,
+      </if>
+      <if test="carimg != null">
+        CARIMG,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="carnumber != null">
+        #{carnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="cartype != null">
+        #{cartype,jdbcType=VARCHAR},
+      </if>
+      <if test="color != null">
+        #{color,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="rentprice != null">
+        #{rentprice,jdbcType=DECIMAL},
+      </if>
+      <if test="deposit != null">
+        #{deposit,jdbcType=DECIMAL},
+      </if>
+      <if test="isrentiing != null">
+        #{isrentiing,jdbcType=DECIMAL},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="carimg != null">
+        #{carimg,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chengyong.car.entity.Cars">
+    update CARS
+    <set>
+      <if test="cartype != null">
+        CARTYPE = #{cartype,jdbcType=VARCHAR},
+      </if>
+      <if test="color != null">
+        COLOR = #{color,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        PRICE = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="rentprice != null">
+        RENTPRICE = #{rentprice,jdbcType=DECIMAL},
+      </if>
+      <if test="deposit != null">
+        DEPOSIT = #{deposit,jdbcType=DECIMAL},
+      </if>
+      <if test="isrentiing != null">
+        ISRENTIING = #{isrentiing,jdbcType=DECIMAL},
+      </if>
+      <if test="description != null">
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="carimg != null">
+        CARIMG = #{carimg,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CARNUMBER = #{carnumber,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chengyong.car.entity.Cars">
+    update CARS
+    set CARTYPE = #{cartype,jdbcType=VARCHAR},
+      COLOR = #{color,jdbcType=VARCHAR},
+      PRICE = #{price,jdbcType=DECIMAL},
+      RENTPRICE = #{rentprice,jdbcType=DECIMAL},
+      DEPOSIT = #{deposit,jdbcType=DECIMAL},
+      ISRENTIING = #{isrentiing,jdbcType=DECIMAL},
+      DESCRIPTION = #{description,jdbcType=VARCHAR},
+      CARIMG = #{carimg,jdbcType=VARCHAR}
+    where CARNUMBER = #{carnumber,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,117 @@
+package com.chengyong.sys.controller;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.websocket.server.PathParam;
+
+import org.apache.ibatis.annotations.Param;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.chengyong.sys.entity.SysRole;
+import com.chengyong.sys.service.SysRoleService;
+import com.chengyong.sys.util.CUD_CallbackInfo;
+import com.chengyong.sys.util.DataView;
+import com.chengyong.sys.util.SysRoleVo;
+
+/**
+ * 角色管理模块
+ * @author PC
+ *
+ */
+@Controller
+@RequestMapping("role/")
+public class SysRoleController {
+	@Autowired
+	private SysRoleService sysoRoleService;
+   
+	/**
+	 * 角色权限数据显示
+	 */
+	@RequestMapping("roleList")
+	@ResponseBody
+	public DataView roleList(SysRole sysRole) {
+		try {
+			DataView list = sysoRoleService.selectByPrimaryKey(sysRole);
+			return list;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	/**
+	 * 添加角色操作
+	 */
+	@RequestMapping("roleAdd")
+	@ResponseBody
+	public Map<String,String> roleAdd(SysRole sysRole){
+		Map<String,String> map = new HashMap<String,String>();
+		try {
+			sysoRoleService.insert(sysRole);
+			map.put("msg", CUD_CallbackInfo.SUCCESS_ADDCallback);
+			return map;
+		}catch(Exception e) {
+			e.printStackTrace();
+			map.put("msg", CUD_CallbackInfo.FAILURE_ADDCallback);
+			return map;
+		}
+	}
+	
+	/**
+	 * 修改角色操作
+	 */
+	@RequestMapping("roleUpdate")
+	@ResponseBody
+	public Map<String,String> roleUpdate(SysRole sysRole){
+		Map<String,String> map = new HashMap<String,String>();
+		try {
+			sysoRoleService.updateByPrimaryKey(sysRole);
+			map.put("msg", CUD_CallbackInfo.SUCCESS_UPDATECallback);
+			return map;
+		}catch(Exception e) {
+			e.printStackTrace();
+			map.put("msg", CUD_CallbackInfo.FAILURE_UPDATECallback);
+			return map;
+		}
+	}
+	
+	/**
+	 * 删除角色操作
+	 */
+	@RequestMapping("roleDelete")
+	@ResponseBody
+	public Map<String,String> roleDelete(@Param("roleid") Short roleid){
+		Map<String,String> map = new HashMap<String,String>();
+		try {
+			sysoRoleService.deleteByPrimaryKey(roleid);
+			map.put("msg", CUD_CallbackInfo.SUCCESS_DELETECallback);
+			return map;
+		}catch(Exception e) {
+			e.printStackTrace();
+			map.put("msg", CUD_CallbackInfo.FAILURE_DELETECallback);
+			return map;
+		}
+	}
+	
+	/**
+	 * 删除角色操作批量操作
+	 */
+	@RequestMapping("roleDeleteLot")
+	@ResponseBody
+	public Map<String,String> roleDeleteLot(@Param("ids") SysRoleVo sysRoleVo){
+		Map<String,String> map = new HashMap<String,String>();
+		try {
+			sysoRoleService.deleteByPrimaryKeyLot(sysRoleVo);
+			map.put("msg", CUD_CallbackInfo.SUCCESS_DELETECallback);
+			return map;
+		}catch(Exception e) {
+			e.printStackTrace();
+			map.put("msg", CUD_CallbackInfo.FAILURE_DELETECallback);
+			return map;
+		}
+	}
+}

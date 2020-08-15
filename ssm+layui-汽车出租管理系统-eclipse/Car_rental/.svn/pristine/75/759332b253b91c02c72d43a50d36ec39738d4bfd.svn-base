@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chengyong.sys.mapper.SysLogLoginMapper">
+  <resultMap id="BaseResultMap" type="com.chengyong.sys.entity.SysLogLogin">
+    <id column="LOGINID" jdbcType="DECIMAL" property="loginid" />
+    <result column="LOGINNAME" jdbcType="VARCHAR" property="loginname" />
+    <result column="LOGINIP" jdbcType="VARCHAR" property="loginip" />
+    <result column="LOGINTIME" jdbcType="TIMESTAMP" property="logintime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    LOGINID, LOGINNAME, LOGINIP, LOGINTIME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Short" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_LOG_LOGIN
+    where LOGINID = #{loginid,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Short">
+    delete from SYS_LOG_LOGIN
+    where LOGINID = #{loginid,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.chengyong.sys.entity.SysLogLogin">
+    insert into SYS_LOG_LOGIN (LOGINID, LOGINNAME, LOGINIP, 
+      LOGINTIME)
+    values (#{loginid,jdbcType=DECIMAL}, #{loginname,jdbcType=VARCHAR}, #{loginip,jdbcType=VARCHAR}, 
+      #{logintime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chengyong.sys.entity.SysLogLogin">
+    insert into SYS_LOG_LOGIN
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="loginid != null">
+        LOGINID,
+      </if>
+      <if test="loginname != null">
+        LOGINNAME,
+      </if>
+      <if test="loginip != null">
+        LOGINIP,
+      </if>
+      <if test="logintime != null">
+        LOGINTIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="loginid != null">
+        #{loginid,jdbcType=DECIMAL},
+      </if>
+      <if test="loginname != null">
+        #{loginname,jdbcType=VARCHAR},
+      </if>
+      <if test="loginip != null">
+        #{loginip,jdbcType=VARCHAR},
+      </if>
+      <if test="logintime != null">
+        #{logintime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chengyong.sys.entity.SysLogLogin">
+    update SYS_LOG_LOGIN
+    <set>
+      <if test="loginname != null">
+        LOGINNAME = #{loginname,jdbcType=VARCHAR},
+      </if>
+      <if test="loginip != null">
+        LOGINIP = #{loginip,jdbcType=VARCHAR},
+      </if>
+      <if test="logintime != null">
+        LOGINTIME = #{logintime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where LOGINID = #{loginid,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chengyong.sys.entity.SysLogLogin">
+    update SYS_LOG_LOGIN
+    set LOGINNAME = #{loginname,jdbcType=VARCHAR},
+      LOGINIP = #{loginip,jdbcType=VARCHAR},
+      LOGINTIME = #{logintime,jdbcType=TIMESTAMP}
+    where LOGINID = #{loginid,jdbcType=DECIMAL}
+  </update>
+</mapper>

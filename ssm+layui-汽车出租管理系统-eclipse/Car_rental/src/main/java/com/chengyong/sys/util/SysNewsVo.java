@@ -1,0 +1,59 @@
+package com.chengyong.sys.util;
+
+import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.chengyong.sys.entity.SysNews;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+public class SysNewsVo{
+	
+   @DateTimeFormat(pattern = "yyy-MM-dd HH:mm:ss")
+   @JsonFormat(pattern = "yyy-MM-dd HH:mm:ss",timezone="GMT+8")
+   private String endtime;
+   
+   @DateTimeFormat(pattern = "yyy-MM-dd HH:mm:ss")
+   @JsonFormat(pattern = "yyy-MM-dd HH:mm:ss",timezone="GMT+8")
+   private String starttime;
+   
+   private Integer page;
+   private Integer limit;
+   private Short[] ids;
+   
+   
+public Short[] getIds() {
+	return ids;
+}
+public void setIds(Short[] ids) {
+	this.ids = ids;
+}
+
+public String getEndtime() {
+	return endtime;
+}
+public void setEndtime(String endtime) {
+	this.endtime = endtime;
+}
+public String getStarttime() {
+	return starttime;
+}
+public void setStarttime(String starttime) {
+	this.starttime = starttime;
+}
+public Integer getPage() {
+	return page;
+}
+public void setPage(Integer page) {
+	this.page = page;
+}
+public Integer getLimit() {
+	return limit;
+}
+public void setLimit(Integer limit) {
+	this.limit = limit;
+}
+   
+   
+   
+}

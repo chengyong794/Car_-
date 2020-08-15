@@ -1,0 +1,64 @@
+package com.chengyong.sys.serviceImpl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.chengyong.sys.entity.SysMenus;
+import com.chengyong.sys.mapper.SysMenusMapper;
+import com.chengyong.sys.service.sysMenusService;
+
+@Service
+public class sysMenusServiceImpl implements sysMenusService{
+    
+	@Autowired
+	private SysMenusMapper sysMenusMapper;
+	
+	@Override
+	public int deleteByPrimaryKey(Short id) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int insert(SysMenus record) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int insertSelective(SysMenus record) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public SysMenus selectByPrimaryKey(Short id) {
+		return sysMenusMapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public int updateByPrimaryKeySelective(SysMenus record) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int updateByPrimaryKey(SysMenus record) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<SysMenus> selectByMenus() {
+		try {
+			return sysMenusMapper.selectByMenus();
+		}catch(Exception e) {
+			e.printStackTrace();
+			return sysMenusMapper.selectByMenus();
+		}
+		
+	}
+
+}

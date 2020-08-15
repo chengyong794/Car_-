@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chengyong.sys.mapper.SysNewsMapper">
+  <resultMap id="BaseResultMap" type="com.chengyong.sys.entity.SysNews">
+    <id column="NEWSID" jdbcType="DECIMAL" property="newsid" />
+    <result column="TITLE" jdbcType="VARCHAR" property="title" />
+    <result column="CONTENT" jdbcType="VARCHAR" property="content" />
+    <result column="CREATETIME" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="OPERNAME" jdbcType="VARCHAR" property="opername" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    NEWSID, TITLE, CONTENT, CREATETIME, OPERNAME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Short" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_NEWS
+    where NEWSID = #{newsid,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Short">
+    delete from SYS_NEWS
+    where NEWSID = #{newsid,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.chengyong.sys.entity.SysNews">
+    insert into SYS_NEWS (NEWSID, TITLE, CONTENT, 
+      CREATETIME, OPERNAME)
+    values (#{newsid,jdbcType=DECIMAL}, #{title,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{opername,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chengyong.sys.entity.SysNews">
+    insert into SYS_NEWS
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="newsid != null">
+        NEWSID,
+      </if>
+      <if test="title != null">
+        TITLE,
+      </if>
+      <if test="content != null">
+        CONTENT,
+      </if>
+      <if test="createtime != null">
+        CREATETIME,
+      </if>
+      <if test="opername != null">
+        OPERNAME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="newsid != null">
+        #{newsid,jdbcType=DECIMAL},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="opername != null">
+        #{opername,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chengyong.sys.entity.SysNews">
+    update SYS_NEWS
+    <set>
+      <if test="title != null">
+        TITLE = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        CONTENT = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="opername != null">
+        OPERNAME = #{opername,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where NEWSID = #{newsid,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chengyong.sys.entity.SysNews">
+    update SYS_NEWS
+    set TITLE = #{title,jdbcType=VARCHAR},
+      CONTENT = #{content,jdbcType=VARCHAR},
+      CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+      OPERNAME = #{opername,jdbcType=VARCHAR}
+    where NEWSID = #{newsid,jdbcType=DECIMAL}
+  </update>
+</mapper>

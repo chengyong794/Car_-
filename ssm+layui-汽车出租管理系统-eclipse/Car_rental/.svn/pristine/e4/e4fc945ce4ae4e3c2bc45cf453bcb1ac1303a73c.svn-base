@@ -1,0 +1,17 @@
+package com.chengyong.sys.mapper;
+
+import com.chengyong.sys.entity.SysRole;
+
+public interface SysRoleMapper {
+    int deleteByPrimaryKey(Short roleid);
+
+    int insert(SysRole record);
+
+    int insertSelective(SysRole record);
+
+    SysRole selectByPrimaryKey(Short roleid);
+
+    int updateByPrimaryKeySelective(SysRole record);
+
+    int updateByPrimaryKey(SysRole record);
+}

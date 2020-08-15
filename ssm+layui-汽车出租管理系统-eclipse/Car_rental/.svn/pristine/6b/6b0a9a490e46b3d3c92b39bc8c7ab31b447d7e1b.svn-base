@@ -1,0 +1,17 @@
+package com.chengyong.car.mapper;
+
+import com.chengyong.car.entity.Cars;
+
+public interface CarsMapper {
+    int deleteByPrimaryKey(String carnumber);
+
+    int insert(Cars record);
+
+    int insertSelective(Cars record);
+
+    Cars selectByPrimaryKey(String carnumber);
+
+    int updateByPrimaryKeySelective(Cars record);
+
+    int updateByPrimaryKey(Cars record);
+}

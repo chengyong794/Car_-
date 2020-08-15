@@ -1,0 +1,51 @@
+package com.chengyong.car.services.impl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.chengyong.car.entity.CarRent;
+import com.chengyong.car.mapper.CarRentMapper;
+import com.chengyong.car.service.CarRentService;
+
+@Service
+public class CarRentServiceImpl implements CarRentService{
+	@Autowired
+	private CarRentMapper carRentMapper;
+
+	@Override
+	public int deleteByPrimaryKey(String rentid) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int insert(CarRent record) {
+		record.setRentflag((short)0);
+		return carRentMapper.insert(record);
+	}
+
+	@Override
+	public int insertSelective(CarRent record) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public CarRent selectByPrimaryKey(String rentid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int updateByPrimaryKeySelective(CarRent record) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int updateByPrimaryKey(CarRent record) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+  
+}

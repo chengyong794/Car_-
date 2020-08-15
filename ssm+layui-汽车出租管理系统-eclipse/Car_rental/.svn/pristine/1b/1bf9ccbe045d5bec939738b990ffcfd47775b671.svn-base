@@ -1,0 +1,30 @@
+package com.chengyong.sys.service;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.chengyong.sys.entity.SysUsers;
+import com.chengyong.sys.util.DataView;
+import com.chengyong.sys.util.SysUsersVo;
+
+@Service
+public interface SysUsersService {
+	int deleteByPrimaryKey(Short userid);
+	
+	int deleteByPrimaryKeyLot(SysUsersVo sysUsersVo);
+
+    int insert(SysUsers record);
+
+    int insertSelective(SysUsers record);
+
+    DataView selectByPrimaryKey(SysUsers sysUsers);
+
+    int updateByPrimaryKeySelective(SysUsers record);
+
+    int updateByPrimaryKey(SysUsers record);
+    
+    SysUsers LoginUser(SysUsers sysUsers);
+    
+    int uesrReset(Short userid);
+}

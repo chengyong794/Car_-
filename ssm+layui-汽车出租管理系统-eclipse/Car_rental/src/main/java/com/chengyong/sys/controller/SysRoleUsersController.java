@@ -1,0 +1,68 @@
+package com.chengyong.sys.controller;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.ibatis.annotations.Param;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.chengyong.sys.entity.SysRoleUsers;
+import com.chengyong.sys.service.SysRoleUsersService;
+import com.chengyong.sys.util.CUD_CallbackInfo;
+import com.chengyong.sys.util.DataView;
+import com.chengyong.sys.util.SysUsersVo;
+
+/**
+ * 用户角色分配
+ * @author PC
+ *
+ */
+@Controller
+@RequestMapping("RoleUsers/")
+@Secured({"ROLE_SYS","ROLE_SUPER"})
+public class SysRoleUsersController {
+
+	@Autowired
+	private SysRoleUsersService sysRoleUsersService;
+	
+	/**
+	 * 用户角色关系 的显示
+	 * @param sysRoleUsers
+	 * @return
+	 */
+	@RequestMapping("RoleUsersList")
+	@ResponseBody
+	public DataView RoleUsersList(SysRoleUsers sysRoleUsers) {
+		DataView list = sysRoleUsersService.selectByPrimaryKey(sysRoleUsers);
+		return list;
+	}
+	
+	/**
+	 * 用户角色关系 id 添加到中间表中
+	 * @param SysUsersVo ，用于接收前端传过来的 用户id  和   角色id 
+	 * @return
+	 */
+	@RequestMapping("RoleUsersAdd")
+	@ResponseBody
+	public Map<String,String> RoleUsersAdd(SysUsersVo sysUsersVo) {
+		Map<String,String> map = new HashMap<String,String>();
+		try {
+			sysRoleUsersService.insert(sysUsersVo);
+			map.put("msg",CUD_CallbackInfo.SUCCESS_ROLE_ASSIGNMENT);
+			return map;
+		}catch(Exception e) {
+			e.printStackTrace();
+			map.put("msg",CUD_CallbackInfo.FAILURE_ROLE_ASSIGNMENT);
+			return map;
+		}
+		
+	}
+	
+	
+	
+	
+}

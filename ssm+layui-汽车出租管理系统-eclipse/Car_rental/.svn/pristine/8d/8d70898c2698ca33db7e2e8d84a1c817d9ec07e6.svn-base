@@ -1,0 +1,35 @@
+package com.chengyong.sys.controller;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.chengyong.sys.entity.SysUsers;
+import com.chengyong.sys.service.SysUsersService;
+
+@Controller
+@RequestMapping("login/")
+public class SysUsersController {
+   @Autowired
+   private SysUsersService sysUsersService;
+   
+   @RequestMapping(value = "userLogin",method = RequestMethod.POST)
+   public String userLogin(SysUsers sysUsers,HttpServletRequest request) {
+	   try {
+		   SysUsers user = sysUsersService.LoginUser(sysUsers);
+		   if(user!=null) {
+			   return "system/main/index";
+		   }else {
+			   request.setAttribute("msg", "请检查密码后重新登录！");
+			   return "system/main/login";
+		   }
+	   }catch(Exception e) {
+		   e.printStackTrace();
+		       return "system/main/login";
+	   }
+	   
+   }
+}

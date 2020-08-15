@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chengyong.sys.mapper.SysUsersMapper">
+  <resultMap id="BaseResultMap" type="com.chengyong.sys.entity.SysUsers">
+    <id column="USERID" jdbcType="DECIMAL" property="userid" />
+    <result column="LOGNAME" jdbcType="VARCHAR" property="logname" />
+    <result column="IDENTITY" jdbcType="VARCHAR" property="identity" />
+    <result column="REALNAME" jdbcType="VARCHAR" property="realname" />
+    <result column="SEX" jdbcType="DECIMAL" property="sex" />
+    <result column="ADDRESS" jdbcType="VARCHAR" property="address" />
+    <result column="PHONE" jdbcType="VARCHAR" property="phone" />
+    <result column="PWD" jdbcType="VARCHAR" property="pwd" />
+    <result column="POSITION" jdbcType="VARCHAR" property="position" />
+    <result column="TYPE" jdbcType="DECIMAL" property="type" />
+    <result column="HEADPIC" jdbcType="VARCHAR" property="headpic" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    USERID, LOGNAME, IDENTITY, REALNAME, SEX, ADDRESS, PHONE, PWD, POSITION, TYPE,HEADPIC
+  </sql>
+  
+  <select id="addUser" parameterType="com.chengyong.sys.entity.SysUsers" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_USERS
+    where LOGNAME = #{logname,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="oldPwd" parameterType="com.chengyong.sys.util.SysUsersVo" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_USERS
+    where PWD = #{oldPwd,jdbcType=VARCHAR} and LOGNAME = #{logname,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="LoginUser" parameterType="com.chengyong.sys.entity.SysUsers" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_USERS
+    where LOGNAME = #{logname,jdbcType=VARCHAR} AND PWD = #{pwd,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectByPrimaryKey" parameterType="com.chengyong.sys.entity.SysUsers" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_USERS
+    <where>
+      <if test="logname != null">
+        and logname like concat('%',concat(#{logname,jdbcType=VARCHAR},'%'))
+      </if>
+      <if test="identity != null">
+        and identity like concat(concat('%',#{identity,jdbcType=VARCHAR}),'%')
+      </if>
+      <if test="realname != null">
+        and realname like concat(concat('%',#{realname,jdbcType=VARCHAR}),'%')
+      </if>
+      <if test="sex != null">
+        and sex like concat(concat('%',#{sex,jdbcType=DECIMAL}),'%')
+      </if>
+      <if test="address != null">
+        and address like concat(concat('%',#{address,jdbcType=DECIMAL}),'%')
+      </if>
+      <if test="phone != null">
+        and phone like concat(concat('%',#{phone,jdbcType=DECIMAL}),'%')
+      </if>
+    </where>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Short">
+    delete from SYS_USERS
+    where USERID = #{userid,jdbcType=DECIMAL}
+  </delete>
+  
+  <insert id="insert" parameterType="com.chengyong.sys.entity.SysUsers">
+    insert into SYS_USERS (USERID, LOGNAME, IDENTITY, 
+      REALNAME, SEX, ADDRESS, 
+      PHONE, PWD, POSITION, 
+      TYPE,HEADPIC)
+    values (#{userid,jdbcType=DECIMAL}, #{logname,jdbcType=VARCHAR}, #{identity,jdbcType=VARCHAR}, 
+      #{realname,jdbcType=VARCHAR}, #{sex,jdbcType=DECIMAL}, #{address,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{pwd,jdbcType=VARCHAR}, #{position,jdbcType=VARCHAR}, 
+      #{type,jdbcType=DECIMAL},#{headpic,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chengyong.sys.entity.SysUsers">
+    insert into SYS_USERS
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        USERID,
+      </if>
+      <if test="logname != null">
+        LOGNAME,
+      </if>
+      <if test="identity != null">
+        IDENTITY,
+      </if>
+      <if test="realname != null">
+        REALNAME,
+      </if>
+      <if test="sex != null">
+        SEX,
+      </if>
+      <if test="address != null">
+        ADDRESS,
+      </if>
+      <if test="phone != null">
+        PHONE,
+      </if>
+      <if test="pwd != null">
+        PWD,
+      </if>
+      <if test="position != null">
+        POSITION,
+      </if>
+      <if test="type != null">
+        TYPE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        #{userid,jdbcType=DECIMAL},
+      </if>
+      <if test="logname != null">
+        #{logname,jdbcType=VARCHAR},
+      </if>
+      <if test="identity != null">
+        #{identity,jdbcType=VARCHAR},
+      </if>
+      <if test="realname != null">
+        #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=DECIMAL},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="pwd != null">
+        #{pwd,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null">
+        #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chengyong.sys.entity.SysUsers">
+    update SYS_USERS
+    <set>
+      <if test="logname != null">
+        LOGNAME = #{logname,jdbcType=VARCHAR},
+      </if>
+      <if test="identity != null">
+        IDENTITY = #{identity,jdbcType=VARCHAR},
+      </if>
+      <if test="realname != null">
+        REALNAME = #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        SEX = #{sex,jdbcType=DECIMAL},
+      </if>
+      <if test="address != null">
+        ADDRESS = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        PHONE = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="pwd != null">
+        PWD = #{pwd,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null">
+        POSITION = #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        TYPE = #{type,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where USERID = #{userid,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chengyong.sys.entity.SysUsers">
+    update SYS_USERS
+    set LOGNAME = #{logname,jdbcType=VARCHAR},
+      IDENTITY = #{identity,jdbcType=VARCHAR},
+      REALNAME = #{realname,jdbcType=VARCHAR},
+      SEX = #{sex,jdbcType=DECIMAL},
+      ADDRESS = #{address,jdbcType=VARCHAR},
+      PHONE = #{phone,jdbcType=VARCHAR},
+      PWD = #{pwd,jdbcType=VARCHAR},
+      POSITION = #{position,jdbcType=VARCHAR},
+      TYPE = #{type,jdbcType=DECIMAL}
+    where USERID = #{userid,jdbcType=DECIMAL}
+  </update>
+  
+  <update id="updateByLogname" parameterType="com.chengyong.sys.entity.SysUsers">
+    update SYS_USERS
+    set
+      REALNAME = #{realname,jdbcType=VARCHAR},
+      SEX = #{sex,jdbcType=DECIMAL},
+      ADDRESS = #{address,jdbcType=VARCHAR},
+      PHONE = #{phone,jdbcType=VARCHAR}
+    where LOGNAME = #{logname,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="uesrReset" parameterType="com.chengyong.sys.entity.SysUsers">
+    update SYS_USERS set PWD = #{pwd,jdbcType=VARCHAR} where USERID = #{userid,jdbcType=DECIMAL}
+  </update>
+  
+  <update id="uesrPwdUpdate" parameterType="com.chengyong.sys.util.SysUsersVo">
+    update SYS_USERS set PWD = #{newPwd,jdbcType=VARCHAR} where LOGNAME = #{logname,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="uesrHeadPicUpdate" parameterType="com.chengyong.sys.entity.SysUsers">
+    update SYS_USERS set HEADPIC = #{headpic,jdbcType=VARCHAR} where LOGNAME = #{logname,jdbcType=VARCHAR}
+  </update>
+</mapper>

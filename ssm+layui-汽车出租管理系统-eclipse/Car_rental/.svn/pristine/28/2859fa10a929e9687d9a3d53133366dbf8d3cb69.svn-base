@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chengyong.sys.mapper.SysRoleUsersMapper">
+  <resultMap id="BaseResultMap" type="com.chengyong.sys.entity.SysRoleUsers">
+    <id column="UID" jdbcType="DECIMAL" property="uid" />
+    <result column="RID" jdbcType="DECIMAL" property="rid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    UID, RID
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Short" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_ROLE_USERS
+    where UID = #{uid,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Short">
+    delete from SYS_ROLE_USERS
+    where UID = #{uid,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.chengyong.sys.entity.SysRoleUsers">
+    insert into SYS_ROLE_USERS (UID, RID)
+    values (#{uid,jdbcType=DECIMAL}, #{rid,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chengyong.sys.entity.SysRoleUsers">
+    insert into SYS_ROLE_USERS
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        UID,
+      </if>
+      <if test="rid != null">
+        RID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        #{uid,jdbcType=DECIMAL},
+      </if>
+      <if test="rid != null">
+        #{rid,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chengyong.sys.entity.SysRoleUsers">
+    update SYS_ROLE_USERS
+    <set>
+      <if test="rid != null">
+        RID = #{rid,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where UID = #{uid,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chengyong.sys.entity.SysRoleUsers">
+    update SYS_ROLE_USERS
+    set RID = #{rid,jdbcType=DECIMAL}
+    where UID = #{uid,jdbcType=DECIMAL}
+  </update>
+</mapper>

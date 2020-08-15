@@ -1,0 +1,121 @@
+package com.chengyong.sys.serviceImpl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.util.DigestUtils;
+
+import com.chengyong.sys.entity.SysUsers;
+import com.chengyong.sys.mapper.SysUsersMapper;
+import com.chengyong.sys.service.SysUsersService;
+import com.chengyong.sys.util.DataView;
+import com.chengyong.sys.util.Publicvalue;
+import com.chengyong.sys.util.SysUsersVo;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+
+@Service
+public class SysUsersServiceImpl implements SysUsersService{
+    @Autowired
+    private SysUsersMapper sysUsersMapper;
+    
+    /**
+     * 用户删除
+     */
+	@Override
+	public int deleteByPrimaryKey(Short userid) {
+		return sysUsersMapper.deleteByPrimaryKey(userid);
+	}
+
+	/**
+	 * 用户插入
+	 */
+	@Override
+	public int insert(SysUsers record) {
+		String md5PWD = DigestUtils.md5DigestAsHex(record.getPwd().getBytes());
+		record.setPwd(md5PWD);
+		return sysUsersMapper.insert(record);
+	}
+
+	@Override
+	public int insertSelective(SysUsers record) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int updateByPrimaryKeySelective(SysUsers record) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	/**
+	 * 用户修改
+	 */
+	@Override
+	public int updateByPrimaryKey(SysUsers record) {
+		String md5PWD = DigestUtils.md5DigestAsHex(record.getPwd().getBytes());
+		record.setPwd(md5PWD);
+		return sysUsersMapper.updateByPrimaryKey(record);
+	}
+
+	/**
+	 * 用户登录
+	 */
+	@Override
+	public SysUsers LoginUser(SysUsers sysUsers) {
+		String md5PWD = DigestUtils.md5DigestAsHex(sysUsers.getPwd().getBytes());
+		sysUsers.setPwd(md5PWD);
+		SysUsers user = sysUsersMapper.LoginUser(sysUsers);
+		if(user!=null) {
+			return user;
+		}else {
+			return null;
+		}
+		
+	}
+
+	/**
+	 * 所有用户的显示
+	 */
+	@Override
+	public DataView selectByPrimaryKey(SysUsers sysUsers) {
+		Page<Object> page = PageHelper.startPage(sysUsers.getPage(), sysUsers.getLimit());
+		List<SysUsers> list = sysUsersMapper.selectByPrimaryKey(sysUsers);
+		PageInfo<SysUsers> info = new PageInfo<SysUsers>(list);
+		return new DataView(info.getTotal(), list);
+	}
+
+	/**
+	 * 用户批量删除
+	 */
+	@Override
+	public int deleteByPrimaryKeyLot(SysUsersVo sysUsersVo) {
+		int j = 0;
+		try {
+			for (int i = 0;i<sysUsersVo.getIds().length;i++) {
+				j = sysUsersMapper.deleteByPrimaryKey(sysUsersVo.getIds()[i]);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return j;
+			
+	}
+
+	/**
+	 * 用户重置密码 默认密码 123456
+	 */
+	@Override
+	public int uesrReset(Short userid) {
+		SysUsers sysUsers = new SysUsers();
+		String md5PWD = DigestUtils.md5DigestAsHex(Publicvalue.PWD.getBytes());
+		sysUsers.setPwd(md5PWD);
+		sysUsers.setUserid(userid);
+		return sysUsersMapper.uesrReset(sysUsers);
+	}
+
+}
